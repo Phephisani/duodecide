@@ -9,7 +9,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { AppNavigator } from './src/navigation/AppNavigator';
 import { auth } from './src/config/firebase';
-import { onAuthStateChanged } from 'firebase/auth';
+import { onAuthStateChanged, signInAnonymously } from 'firebase/auth';
 import { useAuthStore } from './src/store/authStore';
 
 export default function App() {
@@ -19,10 +19,7 @@ export default function App() {
   const [fontsLoaded] = [true];
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user);
-      console.log('App.tsx: Auth state changed'); setLoading(false);
-    });
+    const unsubscribe = onAuthStateChanged(auth, async (user) => { if (user) { setUser(user); console.log('App.tsx: Auth state changed', user.uid); setLoading(false); } else { try { console.log('App.tsx: No user found, signing in anonymously...'); await signInAnonymously(auth); } catch (error) { console.error('Anonymous auth failed', error); setLoading(false); } } });
 
     return unsubscribe;
   }, []);
@@ -42,3 +39,4 @@ export default function App() {
     </NavigationContainer></GestureHandlerRootView></SafeAreaProvider>
   );
 }
+
