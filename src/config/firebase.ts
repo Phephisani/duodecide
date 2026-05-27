@@ -1,6 +1,8 @@
 import { Platform } from 'react-native';
 import { initializeApp } from 'firebase/app';
-import { getAuth, initializeAuth, getReactNativePersistence } from 'firebase/auth';
+import { getAuth, initializeAuth } from 'firebase/auth';
+// @ts-ignore
+import { getReactNativePersistence } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 import { getDatabase } from 'firebase/database';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -21,3 +23,4 @@ export const auth = Platform.OS === 'web' ? getAuth(app) : initializeAuth(app, {
 
 export const db = getFirestore(app);
 export const rtdb = getDatabase(app);
+

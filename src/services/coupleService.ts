@@ -6,17 +6,17 @@ const generateCode = () => Math.random().toString(36).substring(2, 8).toUpperCas
 
 export const generateCoupleCode = async (userId: string): Promise<string> => {
   const code = generateCode();
-  const codeRef = ref(rtdb, couple_codes/);
+  const codeRef = ref(rtdb, `couple_codes/${code}`);
   await set(codeRef, { creatorId: userId, createdAt: Date.now(), expiresAt: Date.now() + 86400000, status: 'active' });
   return code;
 };
 
 export const joinCouple = async (code: string, userId: string): Promise<string> => {
-  const codeRef = ref(rtdb, couple_codes/);
+  const codeRef = ref(rtdb, `couple_codes/${code}`);
   const snapshot = await get(codeRef);
   if (!snapshot.exists()) throw new Error('Invalid code');
   const data = snapshot.val();
-  const coupleId = couple_;
+  const coupleId = `couple_${data.creatorId}_${userId}`;
   await setDoc(doc(db, 'couples', coupleId), { coupleId, partner1Id: data.creatorId, partner2Id: userId, createdAt: serverTimestamp(), status: 'active' });
   await update(codeRef, { status: 'used', coupleId });
   return coupleId;
