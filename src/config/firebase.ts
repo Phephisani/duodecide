@@ -8,13 +8,13 @@ import { getDatabase } from 'firebase/database';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY_HERE",
-  authDomain: "duodecide-app.firebaseapp.com",
-  projectId: "duodecide-app",
-  storageBucket: "duodecide-app.appspot.com",
-  messagingSenderId: "123456789",
-  appId: "1:123456789:web:abcdef123456",
-  databaseURL: "https://duodecide-app-default-rtdb.firebaseio.com"
+  apiKey: "AIzaSyCAv9DI-Y-CHu_ESuUc6MdXbo2IvaSfuqg",
+  authDomain: "duodecide-2922f.firebaseapp.com",
+  projectId: "duodecide-2922f",
+  storageBucket: "duodecide-2922f.firebasestorage.app",
+  messagingSenderId: "183374888741",
+  appId: "1:183374888741:web:42dfeaa581a2e17bfea4cc",
+  databaseURL: "https://duodecide-2922f-default-rtdb.firebaseio.com"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -23,4 +23,6 @@ export const auth = Platform.OS === 'web' ? getAuth(app) : initializeAuth(app, {
 
 export const db = getFirestore(app);
 export const rtdb = getDatabase(app);
+
+
 
